@@ -1,9 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import ProjectForm from "@/components/projects/ProjectForm";
 import { ProjectFormData } from "@/types/projectTypes";
 import { createProject } from "@/api/projectAPI";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { projectFormSchema } from "@/schemas/projectSchemas";
 
 function CreateProjectView() {
     const navigate = useNavigate();
@@ -18,13 +21,21 @@ function CreateProjectView() {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm({ defaultValues: initialValues });
+    } = useForm<ProjectFormData>({
+        defaultValues: initialValues,
+        resolver: zodResolver(projectFormSchema),
+    });
 
-    const handleForm = async (formData: ProjectFormData) => {
-        const message = await createProject(formData);
-        toast.success(message);
-        navigate("/");
-    };
+    const { mutate } = useMutation({
+        mutationFn: createProject,
+        onError: () => {},
+        onSuccess: (message) => {
+            toast.success(message);
+            navigate("/");
+        },
+    });
+
+    const handleForm = (formData: ProjectFormData) => mutate(formData);
 
     return (
         <>

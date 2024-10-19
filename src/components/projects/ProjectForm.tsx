@@ -21,7 +21,7 @@ export default function ProjectForm({ register, errors }: ProjectFormProps) {
                     id="projectName"
                     className="w-full p-3  border border-gray-200"
                     type="text"
-                    placeholder="Rroject Name"
+                    placeholder="Project Name"
                     {...register("projectName", {
                         required: "Project name is required",
                     })}
