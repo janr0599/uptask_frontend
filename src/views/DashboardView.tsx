@@ -18,12 +18,14 @@ function DashboardView() {
                 Manage your projects
             </p>
 
-            <Link
-                className="bg-purple-400 hover:bg-purple-500 px-10 py-3 text-white text-xl font-bold cursor-pointer transition-colors inline-block my-3 rounded-lg"
-                to="/projects/create"
-            >
-                New Project
-            </Link>
+            <nav>
+                <Link
+                    className="bg-purple-400 hover:bg-purple-500 px-10 py-3 text-white text-xl font-bold cursor-pointer transition-colors inline-block my-3 rounded-lg"
+                    to="/projects/create"
+                >
+                    New Project
+                </Link>
+            </nav>
         </>
     );
 }

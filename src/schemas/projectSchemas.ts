@@ -19,6 +19,8 @@ export const projectSchema = z.object({
         .regex(/^[a-zA-Z\s]*$/, "description must only contain letters"),
 });
 
-export const projectFormSchema = projectSchema.omit({
-    _id: true,
+export const projectFormSchema = projectSchema.pick({
+    projectName: true,
+    clientName: true,
+    description: true,
 });
