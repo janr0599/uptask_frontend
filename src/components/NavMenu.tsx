@@ -29,18 +29,18 @@ export const NavMenu = () => {
                         <p className="text-center">Hola: Usuario</p>
                         <Link
                             to="/profile"
-                            className="block p-2 hover:text-purple-950 hover:bg-slate-200 transition-colors rounded-lg"
+                            className="block p-2 hover:text-purple-950 hover:bg-slate-200 transition-colors"
                         >
                             Mi Perfil
                         </Link>
                         <Link
                             to="/"
-                            className="block p-2 hover:text-purple-950 hover:bg-slate-200 transition-colors rounded-lg"
+                            className="block p-2 hover:text-purple-950 hover:bg-slate-200 transition-colors"
                         >
                             Mis Proyectos
                         </Link>
                         <button
-                            className="block p-2 hover:text-purple-950 hover:bg-slate-200 transition-colors rounded-lg w-full text-left"
+                            className="block p-2 hover:text-purple-950 hover:bg-slate-200 transition-colors w-full text-left"
                             type="button"
                             onClick={() => {}}
                         >
