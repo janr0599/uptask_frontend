@@ -6,7 +6,15 @@ import {
     TransitionChild,
     DialogPanel,
 } from "@headlessui/react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import TaskForm from "./TaskForm";
+import { TaskFormData } from "@/types/taskTypes";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { taskFormSchema } from "@/schemas/taskSchemas";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import { createTask } from "@/api/taskAPI";
 
 export default function AddTaskModal() {
     const navigate = useNavigate();
@@ -14,6 +22,44 @@ export default function AddTaskModal() {
     const queryParams = new URLSearchParams(location.search);
     const modalTask = queryParams.get("newTask");
     const show = modalTask ? true : false;
+
+    const params = useParams();
+    const projectId = params.projectId!;
+
+    const initialValues: TaskFormData = {
+        name: "",
+        description: "",
+    };
+
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm({
+        defaultValues: initialValues,
+        resolver: zodResolver(taskFormSchema),
+    });
+
+    const queryClient = useQueryClient();
+    const { mutate } = useMutation({
+        mutationFn: createTask,
+        onError: (error) => {
+            toast.error(error.message);
+        },
+        onSuccess: (message) => {
+            queryClient.invalidateQueries({
+                queryKey: ["editProject", projectId],
+            });
+            toast.success(message);
+            navigate(location.pathname, { replace: true });
+            reset();
+        },
+    });
+
+    const handleCreateTask = (formData: TaskFormData) => {
+        mutate({ formData, projectId });
+    };
 
     return (
         <>
@@ -62,6 +108,24 @@ export default function AddTaskModal() {
                                             task
                                         </span>
                                     </p>
+
+                                    <form
+                                        className="mt-10 space-y-3"
+                                        onSubmit={handleSubmit(
+                                            handleCreateTask
+                                        )}
+                                        noValidate
+                                    >
+                                        <TaskForm
+                                            register={register}
+                                            errors={errors}
+                                        />
+                                        <input
+                                            type="submit"
+                                            value="Create Task"
+                                            className=" bg-fuchsia-600 hover:bg-fuchsia-700 w-full p-3 text-white uppercase font-bold cursor-pointer transition-colors"
+                                        />
+                                    </form>
                                 </DialogPanel>
                             </TransitionChild>
                         </div>
