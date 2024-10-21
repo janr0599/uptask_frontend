@@ -1,4 +1,9 @@
-import { Project, ProjectFormData } from "@/types/projectTypes";
+import {
+    DashboardProjects,
+    Project,
+    ProjectFormData,
+    ProjectUpdate,
+} from "@/types/projectTypes";
 import api from "@/lib/axios";
 import { isAxiosError } from "axios";
 import {
@@ -8,20 +13,57 @@ import {
 
 export const createProject = async (formData: ProjectFormData) => {
     try {
-        const { data } = await api.post("/projects", formData);
+        const { data } = await api.post<{ message: string }>(
+            "/projects",
+            formData
+        );
         return data.message;
     } catch (error) {
         console.log(error);
     }
 };
 
-export const getProjects = async () => {
+export const getProjects = async (): Promise<DashboardProjects> => {
     try {
-        const { data } = await api("/projects");
+        const { data } = await api<{ projects: DashboardProjects }>(
+            "/projects"
+        );
         const response = dashboardProjectSchema.safeParse(data.projects);
         if (response.success) {
             return data.projects;
         }
+        throw new Error("Validation failed");
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+        throw new Error("An unexpected error occurred");
+    }
+};
+
+export const getProjectById = async (id: Project["_id"]): Promise<Project> => {
+    try {
+        const { data } = await api<{ project: Project }>(`/projects/${id}`);
+        const response = projectSchema.safeParse(data.project);
+        if (response.success) {
+            return data.project;
+        }
+        throw new Error("Validation failed");
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+        throw new Error("An unexpected error occurred");
+    }
+};
+
+export const updateProject = async ({ formData, projectId }: ProjectUpdate) => {
+    try {
+        const { data } = await api.put<{ message: string }>(
+            `/projects/${projectId}`,
+            formData
+        );
+        return data.message;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error);
@@ -29,13 +71,12 @@ export const getProjects = async () => {
     }
 };
 
-export const getProjectById = async (id: Project["_id"]) => {
+export const deleteProject = async (id: Project["_id"]) => {
     try {
-        const { data } = await api(`/projects/${id}`);
-        const response = projectSchema.safeParse(data.project);
-        if (response.success) {
-            return data.project;
-        }
+        const { data } = await api.delete<{ message: string }>(
+            `/projects/${id}`
+        );
+        return data.message;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error);

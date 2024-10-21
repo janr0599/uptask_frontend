@@ -12,3 +12,9 @@ export type ProjectFormData = z.infer<typeof projectFormSchema>;
 
 // For validating the API response
 export type DashboardProjects = z.infer<typeof dashboardProjectSchema>;
+
+// For updating a project
+export type ProjectUpdate = {
+    formData: ProjectFormData;
+    projectId: Project["_id"];
+};

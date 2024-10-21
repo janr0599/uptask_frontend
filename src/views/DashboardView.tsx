@@ -8,9 +8,10 @@ import {
 } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { getProjects } from "@/api/projectAPI";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteProject, getProjects } from "@/api/projectAPI";
 import { DashboardProjects } from "@/types/projectTypes";
+import { toast } from "react-toastify";
 
 function DashboardView() {
     const { data, isLoading } = useQuery<DashboardProjects>({
@@ -18,8 +19,19 @@ function DashboardView() {
         queryFn: getProjects,
     });
 
-    if (isLoading) return "loading...";
+    const queryClient = useQueryClient();
+    const { mutate } = useMutation({
+        mutationFn: deleteProject,
+        onError: (error) => {
+            toast.error(error.message);
+        },
+        onSuccess: (message) => {
+            queryClient.invalidateQueries({ queryKey: ["projects"] });
+            toast.success(message);
+        },
+    });
 
+    if (isLoading) return "loading...";
     return (
         <>
             <h1 className="text-5xl font-black">My projects</h1>
@@ -103,7 +115,9 @@ function DashboardView() {
                                                 <button
                                                     type="button"
                                                     className="block px-3 py-1 text-sm leading-6 text-red-500 hover:bg-slate-200 transition-colors w-full text-left"
-                                                    onClick={() => {}}
+                                                    onClick={() =>
+                                                        mutate(project._id)
+                                                    }
                                                 >
                                                     Eliminar Proyecto
                                                 </button>
