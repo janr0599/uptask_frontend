@@ -9,6 +9,7 @@ import { Project } from "@/types/projectTypes";
 import { getProjectById } from "@/api/projectAPI";
 import AddTaskModal from "@/components/tasks/AddTaskModal";
 import TaskList from "@/components/tasks/TaskList";
+import EditTaskData from "@/components/tasks/EditTaskData";
 
 function ProjectDetailsView() {
     const navigate = useNavigate();
@@ -55,7 +56,7 @@ function ProjectDetailsView() {
                         <nav className=" my-5 flex gap-3">
                             <button
                                 type="button"
-                                className=" bg-purple-400 hover:bg-purple-500 px-10 py-3 text-white text-xl font-bold cursor-pointer transition-colors rounded-lg"
+                                className=" bg-purple-400 hover:bg-purple-500 w-60 px-10 py-3 text-white text-xl font-bold cursor-pointer transition-colors rounded-lg"
                                 onClick={() => navigate("/", { replace: true })}
                             >
                                 Back to projects
@@ -65,6 +66,7 @@ function ProjectDetailsView() {
                 </div>
                 <TaskList tasks={data.tasks} />
                 <AddTaskModal />
+                <EditTaskData />
             </>
         );
 }

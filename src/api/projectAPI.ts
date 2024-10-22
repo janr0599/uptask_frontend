@@ -28,8 +28,8 @@ export const getProjects = async (): Promise<DashboardProjects> => {
         const { data } = await api<{ projects: DashboardProjects }>(
             "/projects"
         );
-        const response = dashboardProjectSchema.safeParse(data.projects);
-        if (response.success) {
+        const validation = dashboardProjectSchema.safeParse(data.projects);
+        if (validation.success) {
             return data.projects;
         }
         throw new Error("Validation failed");
@@ -44,8 +44,8 @@ export const getProjects = async (): Promise<DashboardProjects> => {
 export const getProjectById = async (id: Project["_id"]): Promise<Project> => {
     try {
         const { data } = await api<{ project: Project }>(`/projects/${id}`);
-        const response = projectSchema.safeParse(data.project);
-        if (response.success) {
+        const validation = projectSchema.safeParse(data.project);
+        if (validation.success) {
             return data.project;
         }
         throw new Error("Validation failed");

@@ -36,7 +36,7 @@ export default function AddTaskModal() {
         handleSubmit,
         reset,
         formState: { errors },
-    } = useForm({
+    } = useForm<TaskFormData>({
         defaultValues: initialValues,
         resolver: zodResolver(taskFormSchema),
     });
