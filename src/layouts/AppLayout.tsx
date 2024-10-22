@@ -27,7 +27,7 @@ function AppLayout() {
                 </p>
             </footer>
 
-            <ToastContainer />
+            <ToastContainer pauseOnHover={false} pauseOnFocusLoss={false} />
         </>
     );
 }
