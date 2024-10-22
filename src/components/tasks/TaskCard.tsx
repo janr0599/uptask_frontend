@@ -8,7 +8,10 @@ import {
     Transition,
 } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
-import { useNavigate } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import { deleteTask } from "@/api/taskAPI";
+import { useNavigate, useParams } from "react-router-dom";
 
 type TaskCardProps = {
     task: Task;
@@ -17,12 +20,32 @@ type TaskCardProps = {
 function TaskCard({ task }: TaskCardProps) {
     const navigate = useNavigate();
 
+    const params = useParams();
+    const projectId = params.projectId!;
+
+    const queryClient = useQueryClient();
+    const { mutate } = useMutation({
+        mutationFn: deleteTask,
+        onError: (error) => {
+            toast.error(error.message);
+        },
+        onSuccess: (message) => {
+            queryClient.invalidateQueries({
+                queryKey: ["project", projectId],
+            });
+            toast.success(message);
+        },
+    });
+
     return (
         <li className="p-5 bg-white border border-slate-300 flex justify-between gap-3">
             <div className="min-w-0 flex flex-col gap-y-4">
                 <button
                     type="button"
-                    className="text-xl font-bold text-slate-600 text-left"
+                    className="text-xl font-bold text-slate-600 text-left cursor-pointer hover:underline"
+                    onClick={() =>
+                        navigate(location.pathname + `?viewTask=${task._id}`)
+                    }
                 >
                     {task.name}
                 </button>
@@ -51,6 +74,12 @@ function TaskCard({ task }: TaskCardProps) {
                                 <button
                                     type="button"
                                     className="block px-3 py-1 text-sm leading-6 text-gray-900 hover:text-purple-950 hover:bg-slate-200 transition-colors w-full text-left"
+                                    onClick={() =>
+                                        navigate(
+                                            location.pathname +
+                                                `?viewTask=${task._id}`
+                                        )
+                                    }
                                 >
                                     View task
                                 </button>
@@ -74,6 +103,16 @@ function TaskCard({ task }: TaskCardProps) {
                                 <button
                                     type="button"
                                     className="block px-3 py-1 text-sm leading-6 text-red-500 hover:bg-slate-200 transition-colors w-full text-left"
+                                    onClick={() => {
+                                        if (
+                                            confirm("Do you want to proceed?")
+                                        ) {
+                                            mutate({
+                                                projectId,
+                                                taskId: task._id,
+                                            });
+                                        }
+                                    }}
                                 >
                                     Delete Task
                                 </button>

@@ -115,9 +115,13 @@ function DashboardView() {
                                                 <button
                                                     type="button"
                                                     className="block px-3 py-1 text-sm leading-6 text-red-500 hover:bg-slate-200 transition-colors w-full text-left"
-                                                    onClick={() =>
-                                                        mutate(project._id)
-                                                    }
+                                                    onClick={() => {
+                                                        if (
+                                                            confirm("Delete?")
+                                                        ) {
+                                                            mutate(project._id);
+                                                        }
+                                                    }}
                                                 >
                                                     Eliminar Proyecto
                                                 </button>

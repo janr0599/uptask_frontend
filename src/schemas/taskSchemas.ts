@@ -14,6 +14,8 @@ export const taskSchema = z.object({
     description: z.string().trim().min(1, "Task description is required"),
     project: z.string(),
     status: taskStatusSchema,
+    createdAt: z.string(),
+    updatedAt: z.string(),
 });
 
 export const taskFormSchema = taskSchema.pick({

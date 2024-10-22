@@ -10,4 +10,5 @@ export type TaskAPI = {
     formData: TaskFormData;
     projectId: Project["_id"];
     taskId: Task["_id"];
+    status: Task["status"];
 };

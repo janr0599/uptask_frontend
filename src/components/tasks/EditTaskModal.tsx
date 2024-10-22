@@ -30,6 +30,8 @@ export default function EditTaskModal({ data }: EditTaskModalProps) {
     const params = useParams();
     const projectId = params.projectId!;
 
+    const taskId = data._id;
+
     const {
         register,
         handleSubmit,
@@ -48,9 +50,11 @@ export default function EditTaskModal({ data }: EditTaskModalProps) {
         },
         onSuccess: (message) => {
             queryClient.invalidateQueries({
-                queryKey: ["editProject", projectId],
+                queryKey: ["project", projectId],
             });
-            queryClient.invalidateQueries({ queryKey: ["task"] });
+            queryClient.invalidateQueries({
+                queryKey: ["task", taskId],
+            });
             toast.success(message);
             navigate(location.pathname, { replace: true });
             reset();
@@ -58,7 +62,6 @@ export default function EditTaskModal({ data }: EditTaskModalProps) {
     });
 
     const handleEditTask = (formData: TaskFormData) => {
-        const taskId = data._id;
         mutate({ projectId, taskId, formData });
     };
 

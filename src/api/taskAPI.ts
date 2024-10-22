@@ -58,3 +58,37 @@ export const updateTask = async ({
         }
     }
 };
+
+export const deleteTask = async ({
+    projectId,
+    taskId,
+}: Pick<TaskAPI, "projectId" | "taskId">) => {
+    try {
+        const { data } = await api.delete<{ message: string }>(
+            `/projects/${projectId}/tasks/${taskId}`
+        );
+        return data.message;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+    }
+};
+
+export const updateTaskStatus = async ({
+    projectId,
+    taskId,
+    status,
+}: Pick<TaskAPI, "projectId" | "taskId" | "status">) => {
+    try {
+        const { data } = await api.post<{ message: string }>(
+            `/projects/${projectId}/tasks/${taskId}/status`,
+            { status }
+        );
+        return data.message;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+    }
+};
