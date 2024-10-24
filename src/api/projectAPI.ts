@@ -19,7 +19,9 @@ export const createProject = async (formData: ProjectFormData) => {
         );
         return data.message;
     } catch (error) {
-        console.log(error);
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
     }
 };
 
