@@ -1,6 +1,8 @@
 import {
     baseAuthSchema,
+    newPasswordSchema,
     requestConfirmationCodeSchema,
+    forgotPasswordSchema,
     tokenSchema,
     userLoginSchema,
     userRegistrationSchema,
@@ -15,3 +17,5 @@ export type ConfirmToken = z.infer<typeof tokenSchema>;
 export type RequestConfirmationCodeForm = z.infer<
     typeof requestConfirmationCodeSchema
 >;
+export type ForgotPasswordForm = z.infer<typeof forgotPasswordSchema>;
+export type NewPasswordForm = z.infer<typeof newPasswordSchema>;

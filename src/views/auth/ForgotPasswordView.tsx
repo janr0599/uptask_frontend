@@ -1,72 +1,72 @@
 import { useForm } from "react-hook-form";
-import { UserLoginForm } from "@/types/authTypes";
+import { Link } from "react-router-dom";
+import { ForgotPasswordForm } from "@/types/authTypes";
 import ErrorMessage from "@/components/ErrorMessage";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { userLoginSchema } from "@/schemas/authSchemas";
+import { forgotPasswordSchema } from "@/schemas/authSchemas";
 import { useMutation } from "@tanstack/react-query";
-import { authenticateUser } from "@/api/authAPI";
+import { forgotPassword } from "@/api/authAPI";
 import { toast } from "react-toastify";
-import { Link, useNavigate } from "react-router-dom";
 
-export default function LoginView() {
-    const navigate = useNavigate();
-
-    const initialValues: UserLoginForm = {
+export default function ForgotPasswordView() {
+    const initialValues: ForgotPasswordForm = {
         email: "",
-        password: "",
     };
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors },
-    } = useForm<UserLoginForm>({
+    } = useForm<ForgotPasswordForm>({
         defaultValues: initialValues,
-        resolver: zodResolver(userLoginSchema),
+        resolver: zodResolver(forgotPasswordSchema),
     });
 
     const { mutate } = useMutation({
-        mutationFn: authenticateUser,
+        mutationFn: forgotPassword,
         onError: (error) => {
             toast.error(error.message);
         },
-        onSuccess: (message) => {
-            toast.success(message);
-            navigate("/");
-        },
+        onSuccess: (message) => [toast.success(message)],
     });
 
-    const handleLogin = (formData: UserLoginForm) => {
+    const handleForgotPassword = (formData: ForgotPasswordForm) => {
         mutate(formData);
+        reset();
     };
 
     return (
         <>
-            <h1 className="text-5xl font-black text-white">Login</h1>
+            <h1 className="text-5xl font-black text-white">
+                Reset your Password
+            </h1>
             <p className="text-2xl font-light text-white mt-5">
-                Plan your projects and {""}
+                Enter your email and receive instructions to set {""}
                 <span className=" text-fuchsia-500 font-bold">
                     {" "}
-                    manage your tasks
+                    a new password
                 </span>
             </p>
+
             <form
-                onSubmit={handleSubmit(handleLogin)}
+                onSubmit={handleSubmit(handleForgotPassword)}
                 className="space-y-8 p-10 rounded-lg bg-white mt-10"
                 noValidate
             >
                 <div className="flex flex-col gap-5">
-                    <label className="font-normal text-2xl">Email</label>
-
+                    <label className="font-normal text-2xl" htmlFor="email">
+                        Email
+                    </label>
                     <input
                         id="email"
                         type="email"
                         placeholder="Email"
-                        className="w-full p-3  border-gray-300 border rounded-lg"
+                        className="w-full p-3 border-gray-300 border rounded-lg"
                         {...register("email", {
                             required: "Email is required",
                             pattern: {
                                 value: /\S+@\S+\.\S+/,
-                                message: "E-mail no válido",
+                                message: "Invalid email",
                             },
                         })}
                     />
@@ -75,41 +75,25 @@ export default function LoginView() {
                     )}
                 </div>
 
-                <div className="flex flex-col gap-5">
-                    <label className="font-normal text-2xl">Password</label>
-
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        className="w-full p-3  border-gray-300 border rounded-lg"
-                        {...register("password", {
-                            required: "Password is required",
-                        })}
-                    />
-                    {errors.password && (
-                        <ErrorMessage>{errors.password.message}</ErrorMessage>
-                    )}
-                </div>
-
                 <input
                     type="submit"
-                    value="Log in"
+                    value="Send Instructions"
                     className="bg-fuchsia-600 hover:bg-fuchsia-700 w-full p-3  text-white font-black text-xl cursor-pointer transition-colors rounded-lg"
                 />
             </form>
 
             <nav className="mt-10 flex flex-col space-y-4">
                 <Link
+                    to={"/auth/login"}
+                    className="text-center text-gray-300 font-normal"
+                >
+                    Already have an account? Login
+                </Link>
+                <Link
                     to={"/auth/registration"}
                     className="text-center text-gray-300 font-normal"
                 >
                     Don't have an account? Create one
-                </Link>
-                <Link
-                    to={"/auth/forgot-password"}
-                    className="text-center text-gray-300 font-normal"
-                >
-                    Trouble logging in? Reset your password.
                 </Link>
             </nav>
         </>

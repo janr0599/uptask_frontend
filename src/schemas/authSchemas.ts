@@ -45,3 +45,12 @@ export const tokenSchema = baseAuthSchema.pick({
 export const requestConfirmationCodeSchema = baseAuthSchema.pick({
     email: true,
 });
+
+export const forgotPasswordSchema = baseAuthSchema.pick({
+    email: true,
+});
+
+export const newPasswordSchema = baseAuthSchema.pick({
+    password: true,
+    confirmPassword: true,
+});

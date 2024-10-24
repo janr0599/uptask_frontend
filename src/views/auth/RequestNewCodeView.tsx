@@ -8,7 +8,7 @@ import { useMutation } from "@tanstack/react-query";
 import { requestConfirmationCode } from "@/api/authAPI";
 import { toast } from "react-toastify";
 
-export default function RegisterView() {
+export default function RequestNewCodeView() {
     const initialValues: RequestConfirmationCodeForm = {
         email: "",
     };
@@ -61,7 +61,7 @@ export default function RegisterView() {
                         id="email"
                         type="email"
                         placeholder="correo@correo.com"
-                        className="w-full p-3 rounded-lg border-gray-300 border"
+                        className="w-full p-3 border-gray-300 border rounded-lg"
                         {...register("email", {
                             required: "Email is required",
                             pattern: {
@@ -78,7 +78,7 @@ export default function RegisterView() {
                 <input
                     type="submit"
                     value="Request Code"
-                    className="bg-fuchsia-600 hover:bg-fuchsia-700 w-full p-3 rounded-lg text-white font-black  text-xl cursor-pointer"
+                    className="bg-fuchsia-600 hover:bg-fuchsia-700 w-full p-3 text-white font-black text-xl cursor-pointer transition-colors rounded-lg"
                 />
             </form>
 

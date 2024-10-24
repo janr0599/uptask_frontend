@@ -4,6 +4,8 @@ import {
     UserLoginForm,
     ConfirmToken,
     RequestConfirmationCodeForm,
+    ForgotPasswordForm,
+    NewPasswordForm,
 } from "@/types/authTypes";
 import { isAxiosError } from "axios";
 
@@ -35,6 +37,20 @@ export const confirmAccount = async (token: ConfirmToken) => {
     }
 };
 
+export const authenticateUser = async (formData: UserLoginForm) => {
+    try {
+        const { data } = await api.post<{ message: string }>(
+            "/auth/login",
+            formData
+        );
+        return data.message;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+    }
+};
+
 export const requestConfirmationCode = async (
     formData: RequestConfirmationCodeForm
 ) => {
@@ -51,10 +67,44 @@ export const requestConfirmationCode = async (
     }
 };
 
-export const login = async (formData: UserLoginForm) => {
+export const forgotPassword = async (formData: ForgotPasswordForm) => {
     try {
         const { data } = await api.post<{ message: string }>(
-            "/auth/login",
+            "/auth/forgot-password",
+            formData
+        );
+        return data.message;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+    }
+};
+
+export const validateToken = async (token: ConfirmToken) => {
+    try {
+        const { data } = await api.post<{ message: string }>(
+            "/auth/validate-token",
+            token
+        );
+        return data.message;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+    }
+};
+
+export const updatePasswordWithToken = async ({
+    formData,
+    token,
+}: {
+    formData: NewPasswordForm;
+    token: ConfirmToken["token"];
+}) => {
+    try {
+        const { data } = await api.post<{ message: string }>(
+            `/auth/update-password/${token}`,
             formData
         );
         return data.message;

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PinInput, PinInputField } from "@chakra-ui/pin-input";
 import { useState } from "react";
 import { ConfirmToken } from "@/types/authTypes";
@@ -7,6 +7,8 @@ import { confirmAccount } from "@/api/authAPI";
 import { toast } from "react-toastify";
 
 export default function ConfirmAccountView() {
+    const navigate = useNavigate();
+
     const [token, setToken] = useState<ConfirmToken["token"]>("");
 
     const handleChange = (token: ConfirmToken["token"]) => {
@@ -24,6 +26,7 @@ export default function ConfirmAccountView() {
         },
         onSuccess: (message) => {
             toast.success(message);
+            navigate("/auth/login");
         },
     });
 
@@ -36,7 +39,7 @@ export default function ConfirmAccountView() {
                 Entre the code you received {""}
                 <span className=" text-fuchsia-500 font-bold"> by e-mail</span>
             </p>
-            <form className="space-y-8 p-10 bg-white mt-10">
+            <form className="space-y-8 p-10 rounded-lg bg-white mt-10">
                 <label className="font-normal text-2xl text-center block">
                     6-digit code
                 </label>
@@ -46,12 +49,12 @@ export default function ConfirmAccountView() {
                         onChange={handleChange}
                         onComplete={handleComplete}
                     >
-                        <PinInputField className="size-10 p-3 rounded-lg border-gray-300 border placeholder-white" />
-                        <PinInputField className="size-10 p-3 rounded-lg border-gray-300 border placeholder-white" />
-                        <PinInputField className="size-10 p-3 rounded-lg border-gray-300 border placeholder-white" />
-                        <PinInputField className="size-10 p-3 rounded-lg border-gray-300 border placeholder-white" />
-                        <PinInputField className="size-10 p-3 rounded-lg border-gray-300 border placeholder-white" />
-                        <PinInputField className="size-10 p-3 rounded-lg border-gray-300 border placeholder-white" />
+                        <PinInputField className="size-10 p-3 rounded-lg border-gray-600 border placeholder-white" />
+                        <PinInputField className="size-10 p-3 rounded-lg border-gray-600 border placeholder-white" />
+                        <PinInputField className="size-10 p-3 rounded-lg border-gray-600 border placeholder-white" />
+                        <PinInputField className="size-10 p-3 rounded-lg border-gray-600 border placeholder-white" />
+                        <PinInputField className="size-10 p-3 rounded-lg border-gray-600 border placeholder-white" />
+                        <PinInputField className="size-10 p-3 rounded-lg border-gray-600 border placeholder-white" />
                     </PinInput>
                 </div>
             </form>

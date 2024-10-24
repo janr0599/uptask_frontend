@@ -57,7 +57,7 @@ export default function RegistrationView() {
 
             <form
                 onSubmit={handleSubmit(handleRegister)}
-                className="space-y-8 p-10  bg-white mt-10"
+                className="space-y-8 p-10 rounded-lg bg-white mt-10"
                 noValidate
             >
                 <div className="flex flex-col gap-5">
@@ -65,7 +65,7 @@ export default function RegistrationView() {
                     <input
                         type="name"
                         placeholder="Registration name"
-                        className="w-full p-3  border-gray-300 border"
+                        className="w-full p-3 border-gray-300 border rounded-lg"
                         {...register("name", {
                             required: "name is required",
                         })}
@@ -83,7 +83,7 @@ export default function RegistrationView() {
                         id="email"
                         type="email"
                         placeholder="email@email.com"
-                        className="w-full p-3  border-gray-300 border"
+                        className="w-full p-3 border-gray-300 border rounded-lg"
                         {...register("email", {
                             required: "Email is required",
                             pattern: {
@@ -103,7 +103,7 @@ export default function RegistrationView() {
                     <input
                         type="password"
                         placeholder="Registration password"
-                        className="w-full p-3  border-gray-300 border"
+                        className="w-full p-3 border-gray-300 border rounded-lg"
                         {...register("password", {
                             required: "Password is required",
                             minLength: {
@@ -127,7 +127,7 @@ export default function RegistrationView() {
                         id="confirmPassword"
                         type="password"
                         placeholder="Confirm your password"
-                        className="w-full p-3  border-gray-300 border"
+                        className="w-full p-3 border-gray-300 border rounded-lg"
                         {...register("confirmPassword", {
                             required: "Password must be confirmed",
                             validate: (value) =>
@@ -145,7 +145,7 @@ export default function RegistrationView() {
                 <input
                     type="submit"
                     value="Register"
-                    className="bg-fuchsia-600 hover:bg-fuchsia-700 w-full p-3  text-white font-black  text-xl cursor-pointer"
+                    className="bg-fuchsia-600 hover:bg-fuchsia-700 w-full p-3 text-white font-black text-xl cursor-pointer transition-colors rounded-lg"
                 />
             </form>
 
@@ -155,6 +155,12 @@ export default function RegistrationView() {
                     className="text-center text-gray-300 font-normal"
                 >
                     Already have an account? Login
+                </Link>
+                <Link
+                    to={"/auth/forgot-password"}
+                    className="text-center text-gray-300 font-normal"
+                >
+                    Trouble logging in? Reset your password.
                 </Link>
             </nav>
         </>
