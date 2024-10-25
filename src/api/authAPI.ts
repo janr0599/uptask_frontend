@@ -39,11 +39,14 @@ export const confirmAccount = async (token: ConfirmToken) => {
 
 export const authenticateUser = async (formData: UserLoginForm) => {
     try {
-        const { data } = await api.post<{ message: string }>(
+        const { data } = await api.post<{ token: string }>(
             "/auth/login",
             formData
         );
-        return data.message;
+
+        localStorage.setItem("AUTH_TOKEN_UPTASK", data.token);
+
+        return data.token;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error);

@@ -29,8 +29,8 @@ export default function LoginView() {
         onError: (error) => {
             toast.error(error.message);
         },
-        onSuccess: (message) => {
-            toast.success(message);
+        onSuccess: () => {
+            // toast.success("Logging in..");
             navigate("/");
         },
     });
