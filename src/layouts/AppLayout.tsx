@@ -18,7 +18,7 @@ function AppLayout() {
         return (
             <>
                 <header className="bg-gray-800 py-5">
-                    <div className="container mx-auto px-4 flex flex-col lg:flex-row justify-between items-center">
+                    <div className="container mx-auto px-4 flex justify-between items-center">
                         <div className="w-64">
                             <Link to="/">
                                 <Logo />
