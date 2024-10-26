@@ -42,7 +42,7 @@ function TaskCard({ task }: TaskCardProps) {
             <div className="min-w-0 flex flex-col gap-y-4">
                 <button
                     type="button"
-                    className="text-xl font-bold text-slate-600 text-left cursor-pointer hover:underline"
+                    className="text-lg font-bold text-slate-600 text-left cursor-pointer hover:underline"
                     onClick={() =>
                         navigate(location.pathname + `?viewTask=${task._id}`)
                     }
