@@ -6,6 +6,7 @@ import {
     tokenSchema,
     userLoginSchema,
     userRegistrationSchema,
+    authenticatedUserSchema,
 } from "@/schemas/authSchemas";
 import { z } from "zod";
 
@@ -19,3 +20,4 @@ export type RequestConfirmationCodeForm = z.infer<
 >;
 export type ForgotPasswordForm = z.infer<typeof forgotPasswordSchema>;
 export type NewPasswordForm = z.infer<typeof newPasswordSchema>;
+export type AuthenticatedUser = z.infer<typeof authenticatedUserSchema>;

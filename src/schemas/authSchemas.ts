@@ -54,3 +54,12 @@ export const newPasswordSchema = baseAuthSchema.pick({
     password: true,
     confirmPassword: true,
 });
+
+export const authenticatedUserSchema = baseAuthSchema
+    .pick({
+        name: true,
+        email: true,
+    })
+    .extend({
+        _id: z.string(),
+    });
