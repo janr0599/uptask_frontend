@@ -21,7 +21,7 @@ export const findMemberByEmail = async ({
         const validation = teamMemberSchema.safeParse(data.user);
 
         if (!validation.success) throw new Error("Validation failed");
-        return data.user;
+        return validation.data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error);
@@ -58,8 +58,7 @@ export const getProjectMembers = async (
         const validation = teamMembersSchema.safeParse(data.team);
 
         if (!validation.success) throw new Error("Validation failed");
-        console.log(data.team);
-        return data.team;
+        return validation.data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error);
@@ -76,7 +75,6 @@ export const removeMemberFromProject = async ({
         const { data } = await api.delete<{ message: string }>(
             `/projects/${projectId}/team/${memberId}`
         );
-        console.log(data.message);
         return data.message;
     } catch (error) {
         if (isAxiosError(error) && error.response) {

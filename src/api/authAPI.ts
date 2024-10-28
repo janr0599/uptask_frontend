@@ -128,7 +128,7 @@ export const getUser = async (): Promise<AuthenticatedUser> => {
         // Validate the received data
         const validation = authenticatedUserSchema.safeParse(data.user);
         if (validation.success) {
-            return data.user;
+            return validation.data;
         }
 
         // Throw error if validation fails

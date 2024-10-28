@@ -30,7 +30,7 @@ export const getTaskById = async ({
         );
         const validation = taskSchema.safeParse(data.task);
         if (validation.success) {
-            return data.task;
+            return validation.data;
         }
         throw new Error("Validation failed");
     } catch (error) {
