@@ -1,14 +1,5 @@
-// import { Fragment } from "react";
 import { getProjectMembers, removeMemberFromProject } from "@/api/teamAPI";
 import AddMemberModal from "@/components/team/AddMemberModal";
-// import {
-//     Menu,
-//     MenuButton,
-//     MenuItem,
-//     MenuItems,
-//     Transition,
-// } from "@headlessui/react";
-// import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";

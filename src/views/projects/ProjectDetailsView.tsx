@@ -12,8 +12,12 @@ import AddTaskModal from "@/components/tasks/AddTaskModal";
 import TaskList from "@/components/tasks/TaskList";
 import EditTaskData from "@/components/tasks/EditTaskData";
 import TaskModalDetails from "@/components/tasks/TaskModalDetails";
+import { useAuth } from "@/hooks/useAuth";
+import { isManager } from "@/utils/policies";
 
 function ProjectDetailsView() {
+    const { data: user, isLoading: authLoading } = useAuth();
+
     const navigate = useNavigate();
     const params = useParams();
     const projectId = params.projectId!;
@@ -26,10 +30,10 @@ function ProjectDetailsView() {
         retry: false,
     });
 
-    if (isLoading) return "Loading...";
+    if (isLoading && authLoading) return "Loading...";
     if (isError) return <Navigate to="/404" />;
 
-    if (data)
+    if (data && user)
         return (
             <>
                 <div className="container mx-auto px-4">
@@ -37,23 +41,27 @@ function ProjectDetailsView() {
                     <p className="text-xl font-light text-gray-500 mt-5">
                         {data.description}
                     </p>
-                    <nav className=" my-5 flex gap-3">
-                        <button
-                            type="button"
-                            className=" bg-purple-400 hover:bg-purple-500 px-5 py-2 text-white text-lg font-bold cursor-pointer transition-colors rounded-lg"
-                            onClick={() =>
-                                navigate(location.pathname + "?newTask=true")
-                            }
-                        >
-                            Add new Task
-                        </button>
-                        <Link
-                            to={"team"}
-                            className="bg-fuchsia-600 hover:bg-fuchsia-700 px-5 py-2 text-white text-lg font-bold cursor-pointer transition-colors rounded-lg"
-                        >
-                            Collaborators
-                        </Link>
-                    </nav>
+                    {isManager(data.manager, user._id) && (
+                        <nav className=" my-5 flex gap-3">
+                            <button
+                                type="button"
+                                className=" bg-purple-400 hover:bg-purple-500 px-5 py-2 text-white text-lg font-bold cursor-pointer transition-colors rounded-lg"
+                                onClick={() =>
+                                    navigate(
+                                        location.pathname + "?newTask=true"
+                                    )
+                                }
+                            >
+                                Add new Task
+                            </button>
+                            <Link
+                                to={"team"}
+                                className="bg-fuchsia-600 hover:bg-fuchsia-700 px-5 py-2 text-white text-lg font-bold cursor-pointer transition-colors rounded-lg"
+                            >
+                                Collaborators
+                            </Link>
+                        </nav>
+                    )}
 
                     <TaskList tasks={data.tasks} />
                     <AddTaskModal />

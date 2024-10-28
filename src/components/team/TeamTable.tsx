@@ -1,4 +1,8 @@
+import { getProjectById } from "@/api/projectAPI";
+import { Project } from "@/types/projectTypes";
 import { TeamMember, TeamMembers } from "@/types/teamTypes";
+import { isManager } from "@/utils/policies";
+import { useQuery } from "@tanstack/react-query";
 import {
     ColumnDef,
     flexRender,
@@ -13,6 +17,12 @@ type TeamTableProps = {
 };
 
 function TeamTable({ data, mutate, projectId }: TeamTableProps) {
+    const { data: project } = useQuery<Project>({
+        queryKey: ["project", projectId],
+        queryFn: () => getProjectById(projectId),
+        retry: false,
+    });
+
     const columns: ColumnDef<TeamMember>[] = [
         {
             header: "Name",
@@ -21,6 +31,19 @@ function TeamTable({ data, mutate, projectId }: TeamTableProps) {
         {
             header: "Email",
             accessorKey: "email",
+        },
+        {
+            header: "Role",
+            cell: ({ row }) => (
+                <span>
+                    {isManager(
+                        project?.manager as Project["manager"],
+                        row.original._id
+                    )
+                        ? "Manager"
+                        : "Collaborator"}
+                </span>
+            ),
         },
         {
             header: "Actions",
