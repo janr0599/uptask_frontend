@@ -129,8 +129,10 @@ function DashboardView() {
                                                             Ver Proyecto
                                                         </Link>
                                                     </MenuItem>
-                                                    {project.manager ===
-                                                        user._id && (
+                                                    {isManager(
+                                                        project.manager,
+                                                        user._id
+                                                    ) && (
                                                         <>
                                                             <MenuItem>
                                                                 <Link
