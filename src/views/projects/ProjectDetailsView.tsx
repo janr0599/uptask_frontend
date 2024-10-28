@@ -3,6 +3,7 @@ import {
     useNavigate,
     useParams,
     useLocation,
+    Link,
 } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Project } from "@/types/projectTypes";
@@ -32,42 +33,28 @@ function ProjectDetailsView() {
         return (
             <>
                 <div className="container mx-auto px-4">
-                    <div className="flex">
-                        <div className="">
-                            <h1 className="text-4xl font-black">
-                                {data.projectName}
-                            </h1>
-                            <p className="text-xl font-light text-gray-500 mt-5">
-                                {data.description}
-                            </p>
-                            <nav className=" my-5 flex gap-3">
-                                <button
-                                    type="button"
-                                    className=" bg-purple-400 hover:bg-purple-500 px-5 py-2 text-white text-lg font-bold cursor-pointer transition-colors rounded-lg"
-                                    onClick={() =>
-                                        navigate(
-                                            location.pathname + "?newTask=true"
-                                        )
-                                    }
-                                >
-                                    Add new Task
-                                </button>
-                            </nav>
-                        </div>
-                        {/* <div className="mt-auto ml-auto">
-                            <nav className=" my-5 flex gap-3">
-                                <button
-                                    type="button"
-                                    className=" bg-purple-400 hover:bg-purple-500 w-48 px-5 py-2 text-white text-lg font-bold cursor-pointer transition-colors rounded-lg"
-                                    onClick={() =>
-                                        navigate("/", { replace: true })
-                                    }
-                                >
-                                    Back to projects
-                                </button>
-                            </nav>
-                        </div> */}
-                    </div>
+                    <h1 className="text-4xl font-black">{data.projectName}</h1>
+                    <p className="text-xl font-light text-gray-500 mt-5">
+                        {data.description}
+                    </p>
+                    <nav className=" my-5 flex gap-3">
+                        <button
+                            type="button"
+                            className=" bg-purple-400 hover:bg-purple-500 px-5 py-2 text-white text-lg font-bold cursor-pointer transition-colors rounded-lg"
+                            onClick={() =>
+                                navigate(location.pathname + "?newTask=true")
+                            }
+                        >
+                            Add new Task
+                        </button>
+                        <Link
+                            to={"team"}
+                            className="bg-fuchsia-600 hover:bg-fuchsia-700 px-5 py-2 text-white text-lg font-bold cursor-pointer transition-colors rounded-lg"
+                        >
+                            Collaborators
+                        </Link>
+                    </nav>
+
                     <TaskList tasks={data.tasks} />
                     <AddTaskModal />
                     <EditTaskData />
