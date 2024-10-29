@@ -15,9 +15,10 @@ import { useNavigate, useParams } from "react-router-dom";
 
 type TaskCardProps = {
     task: Task;
+    canEdit: boolean;
 };
 
-function TaskCard({ task }: TaskCardProps) {
+function TaskCard({ task, canEdit }: TaskCardProps) {
     const navigate = useNavigate();
 
     const params = useParams();
@@ -84,39 +85,45 @@ function TaskCard({ task }: TaskCardProps) {
                                     View task
                                 </button>
                             </MenuItem>
-                            <MenuItem>
-                                <button
-                                    type="button"
-                                    className="block px-3 py-1 text-sm leading-6 text-gray-900 hover:text-purple-950 hover:bg-slate-200 transition-colors w-full text-left"
-                                    onClick={() =>
-                                        navigate(
-                                            location.pathname +
-                                                `?editTask=${task._id}`
-                                        )
-                                    }
-                                >
-                                    Edit Task
-                                </button>
-                            </MenuItem>
+                            {canEdit && (
+                                <>
+                                    <MenuItem>
+                                        <button
+                                            type="button"
+                                            className="block px-3 py-1 text-sm leading-6 text-gray-900 hover:text-purple-950 hover:bg-slate-200 transition-colors w-full text-left"
+                                            onClick={() =>
+                                                navigate(
+                                                    location.pathname +
+                                                        `?editTask=${task._id}`
+                                                )
+                                            }
+                                        >
+                                            Edit Task
+                                        </button>
+                                    </MenuItem>
 
-                            <MenuItem>
-                                <button
-                                    type="button"
-                                    className="block px-3 py-1 text-sm leading-6 text-red-500 hover:bg-slate-200 transition-colors w-full text-left"
-                                    onClick={() => {
-                                        if (
-                                            confirm("Do you want to proceed?")
-                                        ) {
-                                            mutate({
-                                                projectId,
-                                                taskId: task._id,
-                                            });
-                                        }
-                                    }}
-                                >
-                                    Delete Task
-                                </button>
-                            </MenuItem>
+                                    <MenuItem>
+                                        <button
+                                            type="button"
+                                            className="block px-3 py-1 text-sm leading-6 text-red-500 hover:bg-slate-200 transition-colors w-full text-left"
+                                            onClick={() => {
+                                                if (
+                                                    confirm(
+                                                        "Do you want to proceed?"
+                                                    )
+                                                ) {
+                                                    mutate({
+                                                        projectId,
+                                                        taskId: task._id,
+                                                    });
+                                                }
+                                            }}
+                                        >
+                                            Delete Task
+                                        </button>
+                                    </MenuItem>
+                                </>
+                            )}
                         </MenuItems>
                     </Transition>
                 </Menu>

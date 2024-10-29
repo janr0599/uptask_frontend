@@ -60,7 +60,7 @@ function TeamTable({ data, mutate, projectId }: TeamTableProps) {
                     }}
                     className="text-red-500 hover:text-red-700"
                 >
-                    Delete
+                    Remove
                 </button>
             ),
         },
