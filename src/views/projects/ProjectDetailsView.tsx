@@ -33,8 +33,10 @@ function ProjectDetailsView() {
 
     const canEdit = useMemo(() => data?.manager === user?._id, [user, data]);
 
-    if (isLoading && authLoading) return "Loading...";
-    if (isError) return <Navigate to="/404" />;
+    if (isLoading || authLoading) return "Loading...";
+    if (isError) {
+        return <Navigate to="/404" />;
+    }
 
     if (data && user)
         return (

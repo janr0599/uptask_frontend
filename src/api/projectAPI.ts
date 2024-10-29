@@ -43,19 +43,27 @@ export const getProjects = async (): Promise<DashboardProjects> => {
     }
 };
 
-export const getProjectById = async (id: Project["_id"]): Promise<Project> => {
+export const getProjectById = async (projectId: string): Promise<Project> => {
     try {
-        const { data } = await api<{ project: Project }>(`/projects/${id}`);
+        console.log("Fetching project with ID:", projectId);
+        const { data } = await api<{ project: Project }>(
+            `/projects/${projectId}`
+        );
+
         const validation = projectSchema.safeParse(data.project);
-        if (validation.success) {
-            return validation.data;
+        if (!validation.success) {
+            throw new Error("Project data validation failed");
         }
-        throw new Error("Validation failed");
+
+        return validation.data; // Return validated data
     } catch (error) {
+        console.error("Error fetching project:", error);
         if (isAxiosError(error) && error.response) {
-            throw new Error(error.response.data.error);
+            throw new Error(
+                error.response.data.error || "Failed to fetch project"
+            );
         }
-        throw new Error("An unexpected error occurred");
+        throw new Error("An unexpected error occurred in getProjectById");
     }
 };
 

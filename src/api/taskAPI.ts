@@ -25,15 +25,24 @@ export const getTaskById = async ({
     taskId,
 }: Pick<TaskAPI, "projectId" | "taskId">): Promise<Task> => {
     try {
+        console.log(
+            "Fetching task with projectId:",
+            projectId,
+            "taskId:",
+            taskId
+        );
         const { data } = await api<{ task: Task }>(
             `/projects/${projectId}/tasks/${taskId}`
         );
+
         const validation = taskSchema.safeParse(data.task);
         if (validation.success) {
             return validation.data;
+        } else {
+            throw new Error("Validation failed");
         }
-        throw new Error("Validation failed");
     } catch (error) {
+        console.error("Error fetching task:", error);
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error);
         }

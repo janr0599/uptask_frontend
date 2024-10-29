@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { authenticatedUserSchema } from "./authSchemas";
 
 export const taskStatusSchema = z.enum([
     "pending",
@@ -14,6 +15,10 @@ export const taskSchema = z.object({
     description: z.string().trim().min(1, "Task description is required"),
     project: z.string(),
     status: taskStatusSchema,
+    completedBy: z.union([
+        authenticatedUserSchema, // Validates as an object for the getTakById validation
+        z.string().nullable(), // Allows for string (if needed) for getProjectById validation
+    ]),
     createdAt: z.string(),
     updatedAt: z.string(),
 });
