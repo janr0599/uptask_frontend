@@ -22,6 +22,7 @@ export const createProject = async (formData: ProjectFormData) => {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error);
         }
+        throw new Error("An unexpected error occurred");
     }
 };
 
@@ -45,25 +46,34 @@ export const getProjects = async (): Promise<DashboardProjects> => {
 
 export const getProjectById = async (projectId: string): Promise<Project> => {
     try {
-        console.log("Fetching project with ID:", projectId);
+        // Fetch the project data
         const { data } = await api<{ project: Project }>(
             `/projects/${projectId}`
         );
 
+        // Validate the project data using Zod
         const validation = projectSchema.safeParse(data.project);
+
+        // Log the validation result
         if (!validation.success) {
+            console.error(
+                "Project data validation failed:",
+                validation.error.errors
+            );
             throw new Error("Project data validation failed");
         }
 
         return validation.data; // Return validated data
     } catch (error) {
-        console.error("Error fetching project:", error);
+        // Log the error if it's an Axios error with a response
         if (isAxiosError(error) && error.response) {
             throw new Error(
                 error.response.data.error || "Failed to fetch project"
             );
         }
-        throw new Error("An unexpected error occurred in getProjectById");
+
+        // Log unexpected errors
+        throw new Error("An unexpected error occurred");
     }
 };
 
@@ -78,6 +88,7 @@ export const updateProject = async ({ formData, projectId }: ProjectUpdate) => {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error);
         }
+        throw new Error("An unexpected error occurred");
     }
 };
 
@@ -91,5 +102,6 @@ export const deleteProject = async (id: Project["_id"]) => {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error);
         }
+        throw new Error("An unexpected error occurred");
     }
 };

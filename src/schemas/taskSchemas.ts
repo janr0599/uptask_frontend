@@ -9,16 +9,19 @@ export const taskStatusSchema = z.enum([
     "completed",
 ]);
 
+const completedBySchema = z.object({
+    user: z.union([z.string(), authenticatedUserSchema]), // Union type for user to allow as string when coming from getProjectById and object when coming from GetTaskById
+    status: z.string(),
+    _id: z.string(),
+});
+
 export const taskSchema = z.object({
     _id: z.string(),
     name: z.string().trim().min(1, "Task name is required"),
     description: z.string().trim().min(1, "Task description is required"),
     project: z.string(),
     status: taskStatusSchema,
-    completedBy: z.union([
-        authenticatedUserSchema, // Validates as an object for the getTakById validation
-        z.string().nullable(), // Allows for string (if needed) for getProjectById validation
-    ]),
+    completedBy: z.array(completedBySchema),
     createdAt: z.string(),
     updatedAt: z.string(),
 });

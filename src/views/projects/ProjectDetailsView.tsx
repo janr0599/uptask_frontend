@@ -25,7 +25,7 @@ function ProjectDetailsView() {
 
     const location = useLocation();
 
-    const { data, isLoading, isError } = useQuery<Project>({
+    const { data, isLoading, isError, error } = useQuery<Project>({
         queryKey: ["project", projectId],
         queryFn: () => getProjectById(projectId),
         retry: false,
@@ -35,6 +35,7 @@ function ProjectDetailsView() {
 
     if (isLoading || authLoading) return "Loading...";
     if (isError) {
+        console.log(error);
         return <Navigate to="/404" />;
     }
 

@@ -117,6 +117,33 @@ export default function TaskModalDetails() {
                                     <p className="text-lg text-slate-500 mb-2">
                                         Description: {data.description}
                                     </p>
+
+                                    <p className="text-lg text-slate-500 mt-5 mb-2">
+                                        Activity Log
+                                    </p>
+                                    <ul>
+                                        {data.completedBy.map((entry) => (
+                                            <li
+                                                key={entry._id}
+                                                className="list-decimal ml-4"
+                                            >
+                                                <span className="font-bold text-slate-600">
+                                                    {
+                                                        statusTranslations[
+                                                            entry.status
+                                                        ]
+                                                    }
+                                                    {""} by:
+                                                </span>{" "}
+                                                {
+                                                    typeof entry.user ===
+                                                        "object" &&
+                                                        entry.user.name // If it's an object, display the user's name
+                                                }
+                                            </li>
+                                        ))}
+                                    </ul>
+
                                     <div className="my-5 space-y-3">
                                         <label className="font-bold">
                                             Status:
