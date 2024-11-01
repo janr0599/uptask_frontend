@@ -41,20 +41,25 @@ export const NavMenu = ({ name }: NavMenuProps) => {
                 leaveTo="opacity-0 translate-y-1"
             >
                 <PopoverPanel className="absolute w-48 -left-1/2 lg:left-1/2 z-10 mt-5 flex lg:max-w-min -translate-x-1/2 lg:-translate-x-48">
-                    <div className="w-full lg:w-56 shrink rounded-xl bg-white p-4 text-sm font-semibold leading-6 text-gray-900 shadow-lg ring-1 ring-gray-900/5">
-                        <p className="text-center">Hola: {name}</p>
-                        <Link
+                    <div className="w-full lg:w-56 shrink rounded-xl bg-white text-sm font-semibold leading-6 text-gray-900 shadow-lg ring-1 ring-gray-900/5 py-2">
+                        <p className="text-center pb-1">Hello: {name}</p>
+
+                        <PopoverButton
+                            as={Link}
                             to="/profile"
                             className="block p-2 hover:text-purple-950 hover:bg-slate-200 transition-colors"
                         >
                             My Profile
-                        </Link>
-                        <Link
+                        </PopoverButton>
+
+                        <PopoverButton
+                            as={Link}
                             to="/"
                             className="block p-2 hover:text-purple-950 hover:bg-slate-200 transition-colors"
                         >
                             My Projects
-                        </Link>
+                        </PopoverButton>
+
                         <button
                             className="block p-2 hover:text-purple-950 hover:bg-slate-200 transition-colors w-full text-left"
                             type="button"

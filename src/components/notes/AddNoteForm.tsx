@@ -103,7 +103,7 @@ function AddNoteForm({ note, onCancel }: AddNoteFormProps) {
                     />
                     <input
                         type="submit"
-                        value={note ? "Update Note" : "Add Note"}
+                        value={note ? "Update" : "Add Note"}
                         className="w-full p-2 bg-fuchsia-600 hover:bg-fuchsia-700 text-white rounded-lg font-black cursor-pointer transition-colors md:w-1/4"
                     />
                     {note && (
