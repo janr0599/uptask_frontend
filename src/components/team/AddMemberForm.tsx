@@ -53,7 +53,7 @@ export default function AddMemberForm() {
                         id="name"
                         type="text"
                         placeholder="email@email.com"
-                        className="w-full p-3  border-gray-300 border"
+                        className="w-full p-3 border-gray-300 border rounded-lg"
                         {...register("email", {
                             required: "Email is required",
                             pattern: {
@@ -69,7 +69,7 @@ export default function AddMemberForm() {
 
                 <input
                     type="submit"
-                    className=" bg-fuchsia-600 hover:bg-fuchsia-700 w-full p-3 text-white font-black text-xl cursor-pointer"
+                    className=" bg-fuchsia-600 hover:bg-fuchsia-700 w-full p-3 text-white font-black text-xl cursor-pointer transition-colors rounded-lg"
                     value="Search user"
                 />
             </form>

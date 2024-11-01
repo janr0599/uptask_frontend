@@ -123,7 +123,7 @@ export default function AddTaskModal() {
                                         <input
                                             type="submit"
                                             value="Create Task"
-                                            className=" bg-fuchsia-600 hover:bg-fuchsia-700 w-full p-3 text-white uppercase font-bold cursor-pointer transition-colors"
+                                            className=" bg-fuchsia-600 hover:bg-fuchsia-700 w-full p-3 text-white uppercase font-bold cursor-pointer transition-colors rounded-lg"
                                         />
                                     </form>
                                 </DialogPanel>

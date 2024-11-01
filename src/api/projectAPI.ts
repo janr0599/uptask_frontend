@@ -50,7 +50,7 @@ export const getProjectById = async (projectId: string): Promise<Project> => {
         const { data } = await api<{ project: Project }>(
             `/projects/${projectId}`
         );
-
+        console.log(data);
         // Validate the project data using Zod
         const validation = projectSchema.safeParse(data.project);
 
@@ -62,7 +62,7 @@ export const getProjectById = async (projectId: string): Promise<Project> => {
             );
             throw new Error("Project data validation failed");
         }
-
+        console.log(validation.data);
         return validation.data; // Return validated data
     } catch (error) {
         // Log the error if it's an Axios error with a response

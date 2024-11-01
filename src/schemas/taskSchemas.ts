@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { authenticatedUserSchema } from "./authSchemas";
+import { noteSchema } from "./noteSchemas";
 
 export const taskStatusSchema = z.enum([
     "pending",
@@ -22,6 +23,7 @@ export const taskSchema = z.object({
     project: z.string(),
     status: taskStatusSchema,
     completedBy: z.array(completedBySchema),
+    notes: z.union([z.array(z.string()), z.array(noteSchema)]), // Union type for notes to allow as string when coming from getProjectById and object when coming from GetTaskById
     createdAt: z.string(),
     updatedAt: z.string(),
 });

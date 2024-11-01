@@ -16,7 +16,7 @@ function TaskForm({ register, errors }: TaskFormProps) {
                 </label>
                 <input
                     id="name"
-                    className="w-full p-3 border border-gray-200"
+                    className="w-full p-3 border border-gray-200 rounded-lg"
                     type="text"
                     placeholder="Task Name"
                     {...register("name", {
@@ -35,7 +35,7 @@ function TaskForm({ register, errors }: TaskFormProps) {
                 </label>
                 <input
                     id="description"
-                    className="w-full p-3 border border-gray-200"
+                    className="w-full p-3 border border-gray-200 rounded-lg"
                     type="text"
                     placeholder="Task Description"
                     {...register("description", {

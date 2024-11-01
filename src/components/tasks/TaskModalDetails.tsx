@@ -13,6 +13,7 @@ import { getTaskById, updateTaskStatus } from "@/api/taskAPI";
 import { toast } from "react-toastify";
 import { formatDate } from "@/utils/utils";
 import { statusTranslations } from "@/locales/en";
+import NotesPanel from "../notes/NotesPanel";
 
 export default function TaskModalDetails() {
     const navigate = useNavigate();
@@ -100,56 +101,38 @@ export default function TaskModalDetails() {
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95"
                             >
-                                <DialogPanel className="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all p-16">
-                                    <p className="text-sm text-slate-400">
-                                        Created on: {formatDate(data.createdAt)}
-                                    </p>
-                                    <p className="text-sm text-slate-400">
-                                        Last update:{" "}
-                                        {formatDate(data.updatedAt)}
-                                    </p>
-                                    <DialogTitle
-                                        as="h3"
-                                        className="font-black text-4xl text-slate-600 my-5"
-                                    >
-                                        {data.name}
-                                    </DialogTitle>
-                                    <p className="text-lg text-slate-500 mb-2">
-                                        Description: {data.description}
-                                    </p>
+                                <DialogPanel className="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all py-8 px-12">
+                                    <div className="md:flex justify-between items-center ">
+                                        <div className="order-last mb-auto">
+                                            <p className="text-sm text-slate-400">
+                                                Created on:{" "}
+                                                {formatDate(data.createdAt)}
+                                            </p>
+                                            <p className="text-sm text-slate-400">
+                                                Last update:{" "}
+                                                {formatDate(data.updatedAt)}
+                                            </p>
+                                        </div>
 
-                                    <p className="text-lg text-slate-500 mt-5 mb-2">
-                                        Activity Log
-                                    </p>
-                                    <ul>
-                                        {data.completedBy.map((entry) => (
-                                            <li
-                                                key={entry._id}
-                                                className="list-decimal ml-4"
+                                        <div className="">
+                                            <DialogTitle
+                                                as="h3"
+                                                className="font-black text-4xl text-slate-600 my-5"
                                             >
-                                                <span className="font-bold text-slate-600">
-                                                    {
-                                                        statusTranslations[
-                                                            entry.status
-                                                        ]
-                                                    }
-                                                    {""} by:
-                                                </span>{" "}
-                                                {
-                                                    typeof entry.user ===
-                                                        "object" &&
-                                                        entry.user.name // If it's an object, display the user's name
-                                                }
-                                            </li>
-                                        ))}
-                                    </ul>
+                                                {data.name}
+                                            </DialogTitle>
+                                            <p className="text-lg text-slate-500 mb-2 max-w-[550px]">
+                                                Description: {data.description}
+                                            </p>
+                                        </div>
+                                    </div>
 
-                                    <div className="my-5 space-y-3">
-                                        <label className="font-bold">
+                                    <div className="mt-5 mb-10 space-y-3">
+                                        <label className="font-bold block">
                                             Status:
                                         </label>
                                         <select
-                                            className="w-full p-3 bg-white border border-gray-300"
+                                            className="w-1/4 p-3 bg-white border border-gray-300 rounded-lg"
                                             defaultValue={data.status}
                                             onChange={handleChange}
                                         >
@@ -162,6 +145,42 @@ export default function TaskModalDetails() {
                                             ))}
                                         </select>
                                     </div>
+
+                                    {data.completedBy.length ? (
+                                        <>
+                                            <p className="font-bold text-2xl text-slate-600 mt-5 mb-2">
+                                                Activity Log
+                                            </p>
+                                            <ul>
+                                                {data.completedBy.map(
+                                                    (entry) => (
+                                                        <li
+                                                            key={entry._id}
+                                                            className="list-decimal ml-4"
+                                                        >
+                                                            <span className="font-bold text-slate-600">
+                                                                {
+                                                                    statusTranslations[
+                                                                        entry
+                                                                            .status
+                                                                    ]
+                                                                }
+                                                                {""} by:
+                                                            </span>{" "}
+                                                            {
+                                                                typeof entry.user ===
+                                                                    "object" &&
+                                                                    entry.user
+                                                                        .name // If it's an object, display the user's name
+                                                            }
+                                                        </li>
+                                                    )
+                                                )}
+                                            </ul>
+                                        </>
+                                    ) : null}
+
+                                    <NotesPanel notes={data.notes} />
                                 </DialogPanel>
                             </TransitionChild>
                         </div>

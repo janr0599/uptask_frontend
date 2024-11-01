@@ -29,10 +29,12 @@ export const getTaskById = async ({
         const { data } = await api<{ task: Task }>(
             `/projects/${projectId}/tasks/${taskId}`
         );
+        console.log(data);
 
         // Validate the task data using Zod
         const validation = taskSchema.safeParse(data.task);
         if (validation.success) {
+            console.log(validation.data);
             return validation.data; // Return validated data
         } else {
             // Log the validation errors if validation fails
