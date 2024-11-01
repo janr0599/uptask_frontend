@@ -61,7 +61,7 @@ function CreateProjectView() {
                     <input
                         type="submit"
                         value="Create Project"
-                        className=" bg-fuchsia-600 hover:bg-fuchsia-700 w-full p-3 text-white uppercase font-bold cursor-pointer transition-colors"
+                        className=" bg-fuchsia-600 hover:bg-fuchsia-700 w-full p-3 text-white uppercase font-bold cursor-pointer transition-colors rounded-lg"
                     />
                 </form>
             </div>

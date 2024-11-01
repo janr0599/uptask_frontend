@@ -19,7 +19,7 @@ export default function ProjectForm({ register, errors }: ProjectFormProps) {
                 </label>
                 <input
                     id="projectName"
-                    className="w-full p-3  border border-gray-200"
+                    className="w-full p-3 border border-gray-200 rounded-lg"
                     type="text"
                     placeholder="Project Name"
                     {...register("projectName", {
@@ -41,7 +41,7 @@ export default function ProjectForm({ register, errors }: ProjectFormProps) {
                 </label>
                 <input
                     id="clientName"
-                    className="w-full p-3  border border-gray-200"
+                    className="w-full p-3 border border-gray-200 rounded-lg"
                     type="text"
                     placeholder="Client Name"
                     {...register("clientName", {
@@ -63,7 +63,7 @@ export default function ProjectForm({ register, errors }: ProjectFormProps) {
                 </label>
                 <textarea
                     id="description"
-                    className="w-full p-3  border border-gray-200"
+                    className="w-full p-3  border border-gray-200 rounded-lg"
                     placeholder="Project Description"
                     {...register("description", {
                         required: "Project description is required",
