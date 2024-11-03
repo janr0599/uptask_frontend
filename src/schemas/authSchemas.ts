@@ -12,7 +12,8 @@ export const baseAuthSchema = z.object({
         .string()
         .trim()
         .min(8, "Password must be at least 8 characters"),
-    confirmPassword: z.string().trim().min(8, "Please confirm your password"),
+    confirmPassword: z.string().trim().min(1, "Please confirm your password"),
+    currentPassword: z.string().trim().min(1, "Current Password is required"),
     token: z.string(),
 });
 
