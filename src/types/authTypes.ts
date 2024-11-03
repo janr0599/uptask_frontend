@@ -7,6 +7,7 @@ import {
     userLoginSchema,
     userRegistrationSchema,
     authenticatedUserSchema,
+    deleteProjectConfirmationSchema,
 } from "@/schemas/authSchemas";
 import { z } from "zod";
 
@@ -21,3 +22,7 @@ export type RequestConfirmationCodeForm = z.infer<
 export type ForgotPasswordForm = z.infer<typeof forgotPasswordSchema>;
 export type NewPasswordForm = z.infer<typeof newPasswordSchema>;
 export type AuthenticatedUser = z.infer<typeof authenticatedUserSchema>;
+
+export type DeleteProjectConfirmationForm = z.infer<
+    typeof deleteProjectConfirmationSchema
+>;

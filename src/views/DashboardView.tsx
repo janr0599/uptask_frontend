@@ -7,32 +7,23 @@ import {
     Transition,
 } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
-import { Link } from "react-router-dom";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteProject, getProjects } from "@/api/projectAPI";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { getProjects } from "@/api/projectAPI";
 import { DashboardProjects } from "@/types/projectTypes";
-import { toast } from "react-toastify";
 import { useAuth } from "@/hooks/useAuth";
 import { isManager } from "@/utils/policies";
+import DeleteProjectModal from "@/components/projects/DeleteProjectModal";
 
 function DashboardView() {
+    const location = useLocation();
+    const navigate = useNavigate();
+
     const { data: user, isLoading: authLoading } = useAuth();
 
     const { data, isLoading } = useQuery<DashboardProjects>({
         queryKey: ["projects"],
         queryFn: getProjects,
-    });
-
-    const queryClient = useQueryClient();
-    const { mutate } = useMutation({
-        mutationFn: deleteProject,
-        onError: (error) => {
-            toast.error(error.message);
-        },
-        onSuccess: (message) => {
-            queryClient.invalidateQueries({ queryKey: ["projects"] });
-            toast.success(message);
-        },
     });
 
     if (isLoading && authLoading) return "loading...";
@@ -147,17 +138,12 @@ function DashboardView() {
                                                                 <button
                                                                     type="button"
                                                                     className="block px-3 py-1 text-sm leading-6 text-red-500 hover:bg-slate-200 transition-colors w-full text-left"
-                                                                    onClick={() => {
-                                                                        if (
-                                                                            confirm(
-                                                                                "Delete?"
-                                                                            )
-                                                                        ) {
-                                                                            mutate(
-                                                                                project._id
-                                                                            );
-                                                                        }
-                                                                    }}
+                                                                    onClick={() =>
+                                                                        navigate(
+                                                                            location.pathname +
+                                                                                `?deleteProject=${project._id}`
+                                                                        )
+                                                                    }
                                                                 >
                                                                     Eliminar
                                                                     Proyecto
@@ -184,6 +170,7 @@ function DashboardView() {
                         </Link>
                     </p>
                 )}
+                <DeleteProjectModal />
             </>
         );
 }

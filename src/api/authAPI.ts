@@ -8,6 +8,7 @@ import {
     ForgotPasswordForm,
     NewPasswordForm,
     AuthenticatedUser,
+    DeleteProjectConfirmationForm,
 } from "@/types/authTypes";
 import { isAxiosError } from "axios";
 
@@ -140,6 +141,23 @@ export const getUser = async (): Promise<AuthenticatedUser> => {
         }
 
         // Handle any other unexpected errors
+        throw new Error("An unexpected error occurred");
+    }
+};
+
+export const checkPassword = async (
+    formData: DeleteProjectConfirmationForm
+) => {
+    try {
+        const { data } = await api.post<{ message: string }>(
+            "/auth/check-password",
+            formData
+        );
+        return data.message;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
         throw new Error("An unexpected error occurred");
     }
 };

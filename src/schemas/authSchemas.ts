@@ -64,3 +64,11 @@ export const authenticatedUserSchema = baseAuthSchema
     .extend({
         _id: z.string(),
     });
+
+export const deleteProjectConfirmationSchema = baseAuthSchema
+    .pick({
+        password: true,
+    })
+    .extend({
+        password: z.string().trim().min(1, "Password is required"),
+    });
