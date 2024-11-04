@@ -3,6 +3,7 @@ import TaskCard from "./TaskCard";
 import { statusTranslations } from "@/locales/en";
 import DropTask from "./DropTask";
 import {
+    closestCenter,
     // closestCenter,
     DndContext,
     DragEndEvent,
@@ -125,7 +126,7 @@ function TaskList({ tasks, canEdit }: TaskListProps) {
 
             <div className="flex gap-5 overflow-x-scroll 2xl:overflow-auto pb-32">
                 <DndContext
-                    // collisionDetection={closestCenter}
+                    collisionDetection={closestCenter}
                     sensors={sensors}
                     onDragEnd={handleDragEnd}
                 >

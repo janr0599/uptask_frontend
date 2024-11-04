@@ -32,6 +32,7 @@ export default function DeleteProjectModal() {
         register,
         handleSubmit,
         formState: { errors },
+        reset,
     } = useForm<DeleteProjectConfirmationForm>({
         defaultValues: initialValues,
         resolver: zodResolver(deleteProjectConfirmationSchema),
@@ -53,6 +54,7 @@ export default function DeleteProjectModal() {
         onSuccess: (message) => {
             toast.success(message);
             queryClient.invalidateQueries({ queryKey: ["projects"] });
+            reset();
             navigate(location.pathname, { replace: true });
         },
     });
