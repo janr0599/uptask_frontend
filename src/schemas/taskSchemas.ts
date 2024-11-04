@@ -28,7 +28,11 @@ export const taskSchema = z.object({
     updatedAt: z.string(),
 });
 
-export const taskFormSchema = taskSchema.pick({
-    name: true,
-    description: true,
-});
+export const taskFormSchema = taskSchema
+    .pick({
+        name: true,
+        description: true,
+    })
+    .extend({
+        status: z.optional(taskStatusSchema),
+    });

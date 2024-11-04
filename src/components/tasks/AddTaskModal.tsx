@@ -8,7 +8,7 @@ import {
 } from "@headlessui/react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import TaskForm from "./TaskForm";
-import { TaskFormData } from "@/types/taskTypes";
+import { Task, TaskFormData } from "@/types/taskTypes";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { taskFormSchema } from "@/schemas/taskSchemas";
@@ -21,6 +21,7 @@ export default function AddTaskModal() {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const modalTask = queryParams.get("newTask");
+    const status = queryParams.get("status") || "pending"; // Default to "pending" if no status is provided
     const show = modalTask ? true : false;
 
     const params = useParams();
@@ -29,6 +30,7 @@ export default function AddTaskModal() {
     const initialValues: TaskFormData = {
         name: "",
         description: "",
+        status: status as Task["status"], // set initial status based on URL parameter
     };
 
     const {
@@ -58,7 +60,10 @@ export default function AddTaskModal() {
     });
 
     const handleCreateTask = (formData: TaskFormData) => {
-        mutate({ formData, projectId });
+        mutate({
+            formData: { ...formData, status: status as Task["status"] },
+            projectId,
+        });
     };
 
     return (

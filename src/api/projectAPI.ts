@@ -8,6 +8,7 @@ import api from "@/lib/axios";
 import { isAxiosError } from "axios";
 import {
     dashboardProjectSchema,
+    projectFormSchema,
     projectSchema,
 } from "@/schemas/projectSchemas";
 
@@ -50,7 +51,6 @@ export const getProjectById = async (projectId: string): Promise<Project> => {
         const { data } = await api<{ project: Project }>(
             `/projects/${projectId}`
         );
-        console.log(data);
         // Validate the project data using Zod
         const validation = projectSchema.safeParse(data.project);
 
@@ -62,7 +62,39 @@ export const getProjectById = async (projectId: string): Promise<Project> => {
             );
             throw new Error("Project data validation failed");
         }
-        console.log(validation.data);
+        return validation.data; // Return validated data
+    } catch (error) {
+        // Log the error if it's an Axios error with a response
+        if (isAxiosError(error) && error.response) {
+            throw new Error(
+                error.response.data.error || "Failed to fetch project"
+            );
+        }
+
+        // Log unexpected errors
+        throw new Error("An unexpected error occurred");
+    }
+};
+
+export const getProjectToEdit = async (
+    projectId: string
+): Promise<ProjectFormData> => {
+    try {
+        // Fetch the project data
+        const { data } = await api<{ project: Project }>(
+            `/projects/${projectId}`
+        );
+        // Validate the project data using Zod
+        const validation = projectFormSchema.safeParse(data.project);
+
+        // Log the validation result
+        if (!validation.success) {
+            console.error(
+                "Project data validation failed:",
+                validation.error.errors
+            );
+            throw new Error("Project data validation failed");
+        }
         return validation.data; // Return validated data
     } catch (error) {
         // Log the error if it's an Axios error with a response

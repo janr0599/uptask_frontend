@@ -18,7 +18,9 @@ function NotesPanel({ notes }: NotesPanelProps) {
                         {/* // Checks whether notes is an array of objects and
                         renders the appropriate component */}
                         {notes.every((note) => typeof note === "object") &&
-                            notes.map((note) => <NoteDetails note={note} />)}
+                            notes.map((note) => (
+                                <NoteDetails note={note} key={note._id} />
+                            ))}
                     </>
                 ) : (
                     <p className="text-center text-gray-500 pt-3">

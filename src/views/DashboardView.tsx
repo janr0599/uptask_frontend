@@ -51,7 +51,7 @@ function DashboardView() {
                     <div className="container mx-auto px-4">
                         <ul
                             role="list"
-                            className="divide-y divide-gray-100 border border-gray-100 mt-10 bg-white shadow-lg"
+                            className="divide-y divide-gray-100 border border-gray-100 mt-10 bg-white shadow-lg rounded-lg"
                         >
                             {data.map((project) => (
                                 <li

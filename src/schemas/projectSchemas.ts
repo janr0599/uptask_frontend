@@ -10,7 +10,7 @@ export const projectSchema = z.object({
     tasks: z.array(taskSchema),
 });
 
-// For validating Form input when creating new project
+// For validating Form input and response when creating or editing a project
 export const projectFormSchema = projectSchema.pick({
     projectName: true,
     clientName: true,
