@@ -123,7 +123,7 @@ function TaskList({ tasks, canEdit }: TaskListProps) {
         <>
             <h2 className="text-4xl font-black my-5">Tasks</h2>
 
-            <div className="flex gap-5 overflow-x-scroll md:overflow-hidden pb-32 px-3">
+            <div className="flex gap-5 overflow-x-scroll xl:overflow-hidden pb-32 px-3">
                 <DndContext
                     collisionDetection={closestCenter}
                     sensors={sensors}
