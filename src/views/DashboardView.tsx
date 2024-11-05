@@ -29,13 +29,13 @@ function DashboardView() {
         return (
             <>
                 <div className="container mx-auto px-4">
-                    <h1 className="text-5xl font-black">My projects</h1>
-                    <p className="text-2xl font-light text-gray-500 mt-5">
+                    <h1 className="text-4xl font-black">My projects</h1>
+                    <p className="text-2xl font-light text-gray-500 mt-2">
                         Manage your projects
                     </p>
                     <nav>
                         <Link
-                            className="bg-purple-400 hover:bg-purple-500 px-10 py-3 text-white text-xl font-bold cursor-pointer transition-colors inline-block my-3 rounded-lg"
+                            className="bg-purple-400 hover:bg-purple-500 px-5 py-2 text-white text-lg font-bold cursor-pointer transition-colors inline-block my-5 rounded-lg"
                             to="/projects/create"
                         >
                             New Project
@@ -48,7 +48,7 @@ function DashboardView() {
                         {data.map((project) => (
                             <div
                                 key={project._id}
-                                className="flex justify-between gap-x-6 px-5 py-10 mb-5 border border-gray-100 bg-white shadow-lg rounded-lg"
+                                className="flex justify-between gap-x-6 p-5 border border-gray-100 bg-white shadow-lg rounded-lg"
                             >
                                 <div className="flex min-w-0 gap-x-4">
                                     <div className="min-w-0 flex-auto space-y-2">
@@ -68,7 +68,7 @@ function DashboardView() {
                                         </div>
                                         <Link
                                             to={`/projects/${project._id}`}
-                                            className="text-gray-600 cursor-pointer hover:underline text-3xl font-bold"
+                                            className="text-gray-600 cursor-pointer hover:underline text-2xl font-bold"
                                         >
                                             {project.projectName}
                                         </Link>

@@ -55,7 +55,8 @@ function TaskCard({ task, canEdit }: TaskCardProps) {
         boxShadow: isDragging ? "0px 4px 12px rgba(0, 0, 0, 0.15)" : undefined,
         position: isDragging ? "relative" : undefined,
         cursor: isDragging ? "grabbing" : "pointer",
-        opacity: isDragging ? 0.8 : 1, // To make the dragged card a bit transparent
+        opacity: isDragging ? 0.8 : 1,
+        margin: isDragging ? "-10px" : undefined, // Example negative margin
     } as React.CSSProperties;
 
     return (
@@ -99,11 +100,11 @@ function TaskCard({ task, canEdit }: TaskCardProps) {
                         leaveFrom="transform opacity-100 scale-100"
                         leaveTo="transform opacity-0 scale-95"
                     >
-                        <MenuItems className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none font-semibold">
+                        <MenuItems className="absolute -right-3 z-10 mt-2 w-56 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none font-semibold">
                             <MenuItem>
                                 <button
                                     type="button"
-                                    className="block px-3 py-1 text-sm leading-6 text-gray-900 hover:text-purple-950 hover:bg-slate-200 transition-colors w-full text-left"
+                                    className="block px-3 py-1 text-sm leading-6 text-gray-900 hover:bg-slate-200 transition-colors w-full text-left"
                                     onClick={() =>
                                         navigate(
                                             location.pathname +
@@ -119,7 +120,7 @@ function TaskCard({ task, canEdit }: TaskCardProps) {
                                     <MenuItem>
                                         <button
                                             type="button"
-                                            className="block px-3 py-1 text-sm leading-6 text-gray-900 hover:text-purple-950 hover:bg-slate-200 transition-colors w-full text-left"
+                                            className="block px-3 py-1 text-sm leading-6 text-gray-900 hover:bg-slate-200 transition-colors w-full text-left"
                                             onClick={() =>
                                                 navigate(
                                                     location.pathname +
