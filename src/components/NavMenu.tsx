@@ -47,7 +47,7 @@ export const NavMenu = ({ name }: NavMenuProps) => {
                         <PopoverButton
                             as={Link}
                             to="/profile"
-                            className="block p-2 hover:text-purple-950 hover:bg-slate-200 transition-colors"
+                            className="block p-2 hover:bg-slate-200 transition-colors"
                         >
                             My Profile
                         </PopoverButton>
@@ -55,13 +55,13 @@ export const NavMenu = ({ name }: NavMenuProps) => {
                         <PopoverButton
                             as={Link}
                             to="/"
-                            className="block p-2 hover:text-purple-950 hover:bg-slate-200 transition-colors"
+                            className="block p-2 hover:bg-slate-200 transition-colors"
                         >
                             My Projects
                         </PopoverButton>
 
                         <button
-                            className="block p-2 hover:text-purple-950 hover:bg-slate-200 transition-colors w-full text-left"
+                            className="block p-2 hover:bg-slate-200 transition-colors w-full text-left"
                             type="button"
                             onClick={logout}
                         >

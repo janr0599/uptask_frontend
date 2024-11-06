@@ -48,7 +48,10 @@ function DashboardView() {
                         {data.map((project) => (
                             <div
                                 key={project._id}
-                                className="flex justify-between gap-x-6 p-5 border border-gray-100 bg-white shadow-lg rounded-lg"
+                                className="flex justify-between gap-x-6 p-5 border border-gray-100 bg-white shadow-lg rounded-lg hover:cursor-pointer"
+                                onClick={() =>
+                                    navigate(`/projects/${project._id}`)
+                                }
                             >
                                 <div className="flex min-w-0 gap-x-4">
                                     <div className="min-w-0 flex-auto space-y-2">
@@ -80,7 +83,10 @@ function DashboardView() {
                                         </p>
                                     </div>
                                 </div>
-                                <div className="flex shrink-0 items-center gap-x-6">
+                                <div
+                                    className="flex shrink-0 items-center gap-x-6"
+                                    onClick={(e) => e.stopPropagation()}
+                                >
                                     <Menu
                                         as="div"
                                         className="relative flex-none"
@@ -107,7 +113,7 @@ function DashboardView() {
                                                 <MenuItem>
                                                     <Link
                                                         to={`/projects/${project._id}`}
-                                                        className="block px-3 py-1 text-sm leading-6 text-gray-900 hover:text-purple-950 hover:bg-slate-200 transition-colors"
+                                                        className="block px-3 py-1 text-sm leading-6 text-gray-900  hover:bg-slate-200 transition-colors"
                                                     >
                                                         Ver Proyecto
                                                     </Link>
@@ -120,7 +126,7 @@ function DashboardView() {
                                                         <MenuItem>
                                                             <Link
                                                                 to={`/projects/${project._id}/edit`}
-                                                                className="block px-3 py-1 text-sm leading-6 text-gray-900 hover:text-purple-950 hover:bg-slate-200 transition-colors"
+                                                                className="block px-3 py-1 text-sm leading-6 text-gray-900  hover:bg-slate-200 transition-colors"
                                                             >
                                                                 Editar Proyecto
                                                             </Link>

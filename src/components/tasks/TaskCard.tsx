@@ -80,7 +80,7 @@ function TaskCard({ task, canEdit }: TaskCardProps) {
                 <p className="text-slate-500">{task.description}</p>
             </div>
             <div
-                className="flex shrink-0  gap-x-6"
+                className="flex shrink-0 gap-x-6"
                 onClick={(e) => e.stopPropagation()}
             >
                 <Menu as="div" className="relative flex-none">

@@ -26,6 +26,7 @@ function EditProjectForm({ data, projectId }: EditProjectFormProps) {
         register,
         handleSubmit,
         formState: { errors },
+        setFocus,
     } = useForm<ProjectFormData>({
         defaultValues: initialValues,
         resolver: zodResolver(projectFormSchema),
@@ -71,7 +72,11 @@ function EditProjectForm({ data, projectId }: EditProjectFormProps) {
                     onSubmit={handleSubmit(handleForm)}
                     noValidate
                 >
-                    <ProjectForm register={register} errors={errors} />
+                    <ProjectForm
+                        register={register}
+                        errors={errors}
+                        setFocus={setFocus}
+                    />
                     <input
                         type="submit"
                         value="Update Project"

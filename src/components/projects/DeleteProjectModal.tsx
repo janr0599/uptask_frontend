@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import {
     Dialog,
     DialogPanel,
@@ -33,6 +33,7 @@ export default function DeleteProjectModal() {
         handleSubmit,
         formState: { errors },
         reset,
+        setFocus,
     } = useForm<DeleteProjectConfirmationForm>({
         defaultValues: initialValues,
         resolver: zodResolver(deleteProjectConfirmationSchema),
@@ -64,6 +65,8 @@ export default function DeleteProjectModal() {
 
         await deleteProjectMutation.mutateAsync(deleteProjectId);
     };
+
+    useEffect(() => setFocus("password"), [setFocus]);
 
     return (
         <Transition appear show={show} as={Fragment}>
