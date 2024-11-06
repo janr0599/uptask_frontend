@@ -21,6 +21,7 @@ function CreateProjectView() {
         register,
         handleSubmit,
         formState: { errors },
+        setFocus,
     } = useForm<ProjectFormData>({
         defaultValues: initialValues,
         resolver: zodResolver(projectFormSchema),
@@ -57,7 +58,11 @@ function CreateProjectView() {
                     onSubmit={handleSubmit(handleForm)}
                     noValidate
                 >
-                    <ProjectForm register={register} errors={errors} />
+                    <ProjectForm
+                        register={register}
+                        errors={errors}
+                        setFocus={setFocus}
+                    />
                     <input
                         type="submit"
                         value="Create Project"

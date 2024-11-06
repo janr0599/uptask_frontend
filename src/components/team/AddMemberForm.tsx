@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { teamMemberFormSchema } from "@/schemas/teamSchemas";
 import { findMemberByEmail } from "@/api/teamAPI";
 import SearchResult from "./SearchResult";
+import { useEffect } from "react";
 
 export default function AddMemberForm() {
     const initialValues: TeamMemberForm = {
@@ -20,6 +21,7 @@ export default function AddMemberForm() {
         handleSubmit,
         reset,
         formState: { errors },
+        setFocus,
     } = useForm<TeamMemberForm>({
         defaultValues: initialValues,
         resolver: zodResolver(teamMemberFormSchema),
@@ -38,6 +40,8 @@ export default function AddMemberForm() {
         mutation.reset();
     };
 
+    useEffect(() => setFocus("email"), [setFocus]);
+
     return (
         <>
             <form
@@ -50,7 +54,7 @@ export default function AddMemberForm() {
                         User Email
                     </label>
                     <input
-                        id="name"
+                        id="email"
                         type="text"
                         placeholder="email@email.com"
                         className="w-full p-3 border-gray-300 border rounded-lg"

@@ -1,13 +1,22 @@
-import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { FieldErrors, UseFormRegister, UseFormSetFocus } from "react-hook-form";
 import ErrorMessage from "../ErrorMessage";
 import { ProjectFormData } from "@/types/projectTypes";
+import { useEffect } from "react";
 
 type ProjectFormProps = {
     register: UseFormRegister<ProjectFormData>;
     errors: FieldErrors<ProjectFormData>;
+    setFocus: UseFormSetFocus<ProjectFormData>;
 };
 
-export default function ProjectForm({ register, errors }: ProjectFormProps) {
+export default function ProjectForm({
+    register,
+    errors,
+    setFocus,
+}: ProjectFormProps) {
+    useEffect(() => {
+        setFocus("projectName");
+    }, [setFocus]);
     return (
         <>
             <div className="mb-5 space-y-3">

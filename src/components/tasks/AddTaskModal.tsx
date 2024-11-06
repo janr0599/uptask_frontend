@@ -38,6 +38,7 @@ export default function AddTaskModal() {
         handleSubmit,
         reset,
         formState: { errors },
+        setFocus,
     } = useForm<TaskFormData>({
         defaultValues: initialValues,
         resolver: zodResolver(taskFormSchema),
@@ -124,6 +125,7 @@ export default function AddTaskModal() {
                                         <TaskForm
                                             register={register}
                                             errors={errors}
+                                            setFocus={setFocus}
                                         />
                                         <input
                                             type="submit"

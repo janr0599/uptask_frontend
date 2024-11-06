@@ -1,13 +1,19 @@
-import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { useEffect } from "react";
+import { FieldErrors, UseFormRegister, UseFormSetFocus } from "react-hook-form";
 import ErrorMessage from "../ErrorMessage";
 import { TaskFormData } from "@/types/taskTypes";
 
 type TaskFormProps = {
     register: UseFormRegister<TaskFormData>;
     errors: FieldErrors<TaskFormData>;
+    setFocus: UseFormSetFocus<TaskFormData>;
 };
 
-function TaskForm({ register, errors }: TaskFormProps) {
+function TaskForm({ register, errors, setFocus }: TaskFormProps) {
+    useEffect(() => {
+        setFocus("name");
+    }, [setFocus]);
+
     return (
         <>
             <div className="flex flex-col gap-5">
@@ -23,7 +29,6 @@ function TaskForm({ register, errors }: TaskFormProps) {
                         required: "Task name is required",
                     })}
                 />
-
                 {errors.name && (
                     <ErrorMessage>{errors.name.message}</ErrorMessage>
                 )}
@@ -42,7 +47,6 @@ function TaskForm({ register, errors }: TaskFormProps) {
                         required: "Client name is required",
                     })}
                 />
-
                 {errors.description && (
                     <ErrorMessage>{errors.description.message}</ErrorMessage>
                 )}
@@ -50,4 +54,5 @@ function TaskForm({ register, errors }: TaskFormProps) {
         </>
     );
 }
+
 export default TaskForm;
