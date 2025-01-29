@@ -115,7 +115,7 @@ function DashboardView() {
                                                         to={`/projects/${project._id}`}
                                                         className="block px-3 py-1 text-sm leading-6 text-gray-900  hover:bg-slate-200 transition-colors"
                                                     >
-                                                        Ver Proyecto
+                                                        View Project
                                                     </Link>
                                                 </MenuItem>
                                                 {isManager(
@@ -128,7 +128,7 @@ function DashboardView() {
                                                                 to={`/projects/${project._id}/edit`}
                                                                 className="block px-3 py-1 text-sm leading-6 text-gray-900  hover:bg-slate-200 transition-colors"
                                                             >
-                                                                Editar Proyecto
+                                                                Edit Project
                                                             </Link>
                                                         </MenuItem>
                                                         <MenuItem>
@@ -142,8 +142,7 @@ function DashboardView() {
                                                                     )
                                                                 }
                                                             >
-                                                                Eliminar
-                                                                Proyecto
+                                                                Delete Project
                                                             </button>
                                                         </MenuItem>
                                                     </>
